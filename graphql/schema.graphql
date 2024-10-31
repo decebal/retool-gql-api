@@ -1,0 +1,85 @@
+"A datetime string with format `Y-m-d H:i:s`, e.g. `2018-05-23 13:43:32`."
+scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
+
+"Indicates what fields are available at the top level of a query operation."
+type Query {
+    "Find a single user by an identifying attribute."
+    user(
+        "Search by primary key."
+        id: ID @eq @rules(apply: ["prohibits:email", "required_without:email"])
+
+        "Search by email address."
+        email: String @eq @rules(apply: ["prohibits:id", "required_without:id", "email"])
+    ): User @find
+
+    "List multiple users."
+    users(
+        "Filters by name. Accepts SQL LIKE wildcards `%` and `_`."
+        name: String @where(operator: "like")
+    ): [User!]! @paginate(defaultCount: 10)
+
+    "List multiple orders not necessarily by user."
+    orders(
+        order_number: String @where(operator: "like")
+        user_id: String @where(operator: "like")
+    ): [Order!]! @paginate(defaultCount: 10)
+}
+
+
+type Mutation {
+    createProduct(name: String!, deliveryStatus: String!, deliveryTime: DateTime!, orderId: ID!): Product
+    @create(model: "App\\Models\\Product")
+
+    deleteProduct(id: ID!): Product @delete(model: "App\\Models\\Product")
+
+    createOrder(orderNumber: String!, userId: ID!, products: [ProductInput!]!): Order
+    @can(if: "createOrder")
+    @create(model: "App\\Models\\Order")
+    @validate(rules: "orderNumber => required|string|unique:orders,order_number, products.*.deliveryStatus => required|string,products.*.deliveryTime => required|date, products => required,array,min:1,App\\Rules\\OrderHasProducts")
+
+    updateProduct(id: ID!, deliveryStatus: String, deliveryTime: String): Product
+    @can(if: "updateProduct")
+    @update(model: "App\\Models\\Product")
+    @validate(rules: "deliveryStatus => nullable|string, deliveryTime => nullable|date")
+}
+
+type Product @model {
+    id: ID!
+    name: String!
+    deliveryStatus: String!
+    deliveryTime: DateTime!
+    order: Order @belongsTo
+}
+
+type Order @model {
+    id: ID!
+    orderNumber: String!
+    user: User @belongsTo
+    products: [Product!]! @hasMany
+}
+
+"Account of a person who utilizes this application."
+type User @model {
+    id: ID!
+    name: String!
+    email: String!
+    orders: [Order!]! @hasMany
+
+    "When the email was verified."
+    email_verified_at: DateTime
+
+    "When the account was created."
+    created_at: DateTime!
+
+    "When the account was last updated."
+    updated_at: DateTime!
+
+    "User role, one of admin | supplier."
+    role: String!
+}
+
+input ProductInput {
+    name: String!
+    deliveryStatus: String!
+    deliveryTime: String!
+}
