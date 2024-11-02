@@ -33,9 +33,9 @@ type Mutation {
     deleteProduct(id: ID!): Product @delete(model: "App\\Models\\Product")
 
     createOrder(orderNumber: String!, userId: ID!, products: [ProductInput!]!): Order
-    @can(if: "createOrder")
+    @can(ability: "createOrder")
     @create(model: "App\\Models\\Order")
-    @validate(rules: "orderNumber => required|string|unique:orders,order_number, products.*.deliveryStatus => required|string,products.*.deliveryTime => required|date, products => required,array,min:1,App\\Rules\\OrderHasProducts")
+#    @validate(rules: "orderNumber => required|string|unique:orders,order_number, products.*.deliveryStatus => required|string,products.*.deliveryTime => required|date, products => required,array,min:1,App\\Rules\\OrderHasProducts")
 
     updateProduct(id: ID!, deliveryStatus: String, deliveryTime: String): Product
     @can(if: "updateProduct")
