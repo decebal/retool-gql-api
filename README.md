@@ -1,69 +1,149 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Retool Gql Api Support
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+	Disclaimer: This project is intended for educational purposes only. It is not designed for production use and may not follow best practices for deployment, security, or scalability. Use it as a learning resource and modify as needed for your own projects.
 
-## About Laravel
+## Table of Contents
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+	•	Overview
+	•	Features
+	•	Installation
+	•	Usage
+	•	Environment Variables
+	•	API Endpoints
+	•	Built With
+	•	Project Structure
+	•	Contributing
+	•	License
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Overview
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Project Name is a [brief description of what the project does and its purpose]. This project was created to demonstrate the core concepts of [relevant technologies or frameworks] and serves as a reference or starting point for similar projects.
 
-## Learning Laravel
+## Features
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+	•	📄 Feature 1: Describe what it does and why it’s valuable.
+	•	🔒 Feature 2: Explain another feature.
+	•	🚀 Feature 3: Highlight any unique capabilities.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Installation
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+To get started with the project, follow these steps:
 
-## Laravel Sponsors
+Prerequisites
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+	•	Software requirement 1
+	•	Software requirement 2
 
-### Premium Partners
+## Clone the Repository
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+```bash
+git clone https://github.com/yourusername/yourprojectname.git
+cd yourprojectname
+```
+
+## Install Dependencies
+
+```bash
+composer install
+npm install
+```
+
+## Database Setup
+
+Make sure to set up a local or cloud database and add the connection details to .env.
+
+```bash
+php artisan migrate --seed
+```
+
+## Generate Application Key
+
+```bash
+php artisan key:generate
+```
+
+## Usage
+
+Start the local development server with:
+
+```bash
+php artisan serve
+```
+Then visit http://localhost:8000 in your browser to access the application.
+
+## Environment Variables
+
+To configure the project, create a .env file based on .env.example and update the following:
+
+```bash
+APP_NAME=YourAppName
+APP_ENV=local
+APP_KEY=base64:GeneratedAppKey
+APP_DEBUG=true
+APP_URL=http://localhost
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=yourdatabase
+DB_USERNAME=yourusername
+DB_PASSWORD=yourpassword
+```
+Note: You may need to set additional environment variables based on your setup, such as API keys and external service URLs.
+
+
+## API Endpoints
+
+### Authentication
+
+	•	POST /api/login: Authenticate a user.
+	•	POST /api/refresh: Refresh the access token.
+
+### Orders
+
+	•	GET /api/orders: Retrieve all orders.
+	•	POST /api/orders: Create a new order (Admin only).
+
+### Products
+
+	•	GET /api/products: List all products.
+	•	PATCH /api/products/{id}: Update a product’s delivery time and status (Supplier only).
+
+## Built With
+
+	•	Laravel - PHP framework for web applications
+	•	GraphQL - Query language for APIs
+	•	DigitalOcean - Cloud provider for deployment
+
+## Project Structure
+
+```paintext
+retool-gql-api/
+├── app/                # Application core files
+├── config/             # Configuration files
+├── database/           # Migrations and seeds
+├── public/             # Public assets and index.php
+├── resources/          # Views, layouts, and frontend assets
+├── routes/             # Web and API route definitions
+├── tests/              # Automated tests
+└── README.md           # Project README file
+```
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Contributions are welcome! If you’d like to improve this project:
 
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+	1.	Fork the repository.
+	2.	Create a new branch (git checkout -b feature-branch).
+	3.	Make your changes and commit them (git commit -am 'Add new feature').
+	4.	Push to the branch (git push origin feature-branch).
+	5.	Open a Pull Request.
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is licensed under the MIT License. You are free to use, modify, and distribute this code with proper attribution.
+
+This README provides a comprehensive introduction and setup guide for your repository, making it easy for others to understand and contribute. Adjust each section as needed to fit your specific project!
 
 
 # TODO:
@@ -78,8 +158,3 @@ Set up Retool views for Admin and Supplier roles:
 	•	Supplier View:
 	•	Use GraphQL mutations to update deliveryTime and deliveryStatus for products (limited to Supplier role).
 
-7. Additional Considerations
-
-   •	Testing: Write unit tests and feature tests to ensure proper functionality and permissions.
-   •	Seeding: Add seeders to create default users with roles and some orders/products for testing.
-   •	Error Handling: Use custom exceptions for validation and permissions.
