@@ -1,5 +1,5 @@
 # Stage 1: Build dependencies
-FROM php:8.1-fpm AS builder
+FROM php:8.3-fpm AS builder
 
 # Install system dependencies only needed for building
 RUN apt-get update && apt-get install -y \
@@ -22,7 +22,7 @@ COPY . /var/www
 RUN composer install --no-dev --optimize-autoloader --no-scripts
 
 # Stage 2: Production environment
-FROM php:8.1-fpm
+FROM php:8.3-fpm
 
 # Copy only necessary extensions and PHP libraries
 RUN apt-get update && apt-get install -y \
