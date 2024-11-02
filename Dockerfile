@@ -6,8 +6,8 @@ RUN apt-get update && apt-get install -y \
     curl \
     zip \
     unzip \
-    git \
-    && docker-php-ext-install pdo_mysql
+    git
+
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -32,7 +32,8 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     libjpeg-dev \
     libfreetype6-dev \
-    && docker-php-ext-install pdo_mysql \
+    libpq-dev \
+    && docker-php-ext-install -j$(nproc) gd pdo pdo_pgsql \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Copy the built application from the builder stage

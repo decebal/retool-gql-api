@@ -4,7 +4,9 @@ services:
             context: .
             dockerfile: Dockerfile
         container_name: php_app
-        command: [ "./wait-for-it.sh", "db:3306", "--", "php-fpm" ]
+        command: [ "./wait-for-it.sh", "db:5432", "--", "php-fpm" ]
+        environment:
+            - DATABASE_URL=pgsql://user:userpassword@db:5432/order_db
         volumes:
             - .:/var/www
         working_dir: /var/www
@@ -12,6 +14,7 @@ services:
             - app-network
         depends_on:
             - db
+        entrypoint: [ "./docker/docker-entrypoint.sh" ]
 
     webserver:
         image: nginx:latest
@@ -27,26 +30,16 @@ services:
             - app
 
     db:
-        image: mysql:8.0
-        container_name: mysql
+        image: postgres:13
+        container_name: postgres_db
         environment:
-            MYSQL_ROOT_PASSWORD: rootpassword
-            MYSQL_DATABASE: order_db
-            MYSQL_USER: user
-            MYSQL_PASSWORD: userpassword
+            POSTGRES_DB: order_db
+            POSTGRES_USER: user
+            POSTGRES_PASSWORD: userpassword
         ports:
-            - "3306:3306"
+            - "5432:5432"
         networks:
             - app-network
-
-    playground:
-        image: mpwsh/graphql-playground:latest
-        ports:
-            - "4000:4000"
-        environment:
-            - GRAPHQL_ENDPOINT=http://app:8080/graphql  # Update if your endpoint differs
-        depends_on:
-            - app
 
 networks:
     app-network:
