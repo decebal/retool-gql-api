@@ -30,20 +30,18 @@ type Query {
 
 
 type Mutation {
-    createProduct(name: String!, deliveryStatus: String!, deliveryTime: DateTime!, orderId: ID!): Product
-    @create(model: "App\\Models\\Product")
+    createOrder(products: [ID!]!, quantities: [Int!]!): Order
+    @field(resolver: "App\\GraphQL\\Mutations\\OrderMutations@create")
+    @guard(with: ["api"])
 
-    deleteProduct(id: ID!): Product @delete(model: "App\\Models\\Product")
-
-    createOrder(orderNumber: String!, userId: ID!, products: [ProductInput!]!): Order
-    @can(ability: "createOrder")
-    @create(model: "App\\Models\\Order")
-#    @validate(rules: "orderNumber => required|string|unique:orders,order_number, products.*.deliveryStatus => required|string,products.*.deliveryTime => required|date, products => required,array,min:1,App\\Rules\\OrderHasProducts")
-
-    updateProduct(id: ID!, deliveryStatus: String, deliveryTime: String): Product
-    @can(if: "updateProduct")
-    @update(model: "App\\Models\\Product")
-    @validate(rules: "deliveryStatus => nullable|string, deliveryTime => nullable|date")
+    updateProduct(
+        productId: ID!
+        orderId: ID!
+        deliveryTime: String!
+        deliveryStatus: String!
+    ): Product
+    @field(resolver: "App\\GraphQL\\Mutations\\ProductMutations@update")
+    @guard(with: ["api"])
 
     login(email: String!, password: String!): AuthPayload @field(resolver: "App\\GraphQL\\Mutations\\AuthMutations@login")
     refresh(refreshToken: String!): AuthPayload @field(resolver: "App\\GraphQL\\Mutations\\AuthMutations@refresh")
@@ -82,12 +80,6 @@ type User @model {
 
     "User role, one of admin | supplier."
     role: String!
-}
-
-input ProductInput {
-    name: String!
-    delivery_status: String!
-    delivery_time: String!
 }
 
 type AuthPayload {

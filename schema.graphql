@@ -13,12 +13,10 @@ type AuthPayload {
 }
 
 type Mutation {
-    createOrder(orderNumber: String!, products: [ProductInput!]!, userId: ID!): Order
-    createProduct(deliveryStatus: String!, deliveryTime: DateTime!, name: String!, orderId: ID!): Product
-    deleteProduct(id: ID!): Product
+    createOrder(products: [ID!]!, quantities: [Int!]!): Order
     login(email: String!, password: String!): AuthPayload
     refresh(refreshToken: String!): AuthPayload
-    updateProduct(deliveryStatus: String, deliveryTime: String, id: ID!): Product
+    updateProduct(deliveryStatus: String!, deliveryTime: String!, orderId: ID!, productId: ID!): Product
 }
 
 type Order {
@@ -179,10 +177,4 @@ input OrderByClause {
     column: String!
     "The direction that is used for ordering."
     order: SortOrder!
-}
-
-input ProductInput {
-    delivery_status: String!
-    delivery_time: String!
-    name: String!
 }
