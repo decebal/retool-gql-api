@@ -5,7 +5,7 @@
 
 # Run any command you need here (e.g., migrate the database)
 php artisan migrate --force
-php artisan db:seed
+#php artisan db:seed
 
 # Start the PHP-FPM server
 php-fpm

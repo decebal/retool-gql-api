@@ -13,22 +13,24 @@ class ProductSeeder extends Seeder
      */
     public function run(): void
     {
-        $orders = Order::all();
+        Product::create([
+            'name' => 'Laptop',
+        ]);
 
-        foreach ($orders as $order) {
-            Product::create([
-                'name' => 'Sample Product 1',
-                'delivery_status' => 'pending',
-                'delivery_time' => now()->addDays(3),
-                'order_id' => $order->id,
-            ]);
+        Product::create([
+            'name' => 'Monitor',
+        ]);
 
-            Product::create([
-                'name' => 'Sample Product 2',
-                'delivery_status' => 'shipped',
-                'delivery_time' => now()->addDays(1),
-                'order_id' => $order->id,
-            ]);
-        }
+        Product::create([
+            'name' => 'Standup Desk',
+        ]);
+
+        Product::create([
+            'name' => 'Lamp',
+        ]);
+
+        Product::create([
+            'name' => 'Headphones',
+        ]);
     }
 }

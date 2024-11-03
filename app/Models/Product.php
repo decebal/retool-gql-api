@@ -19,8 +19,10 @@ class Product extends Model
     ];
 
     // Define the relationships
-    public function order(): BelongsTo
+    public function orders()
     {
-        return $this->belongsTo(Order::class);
+        return $this->belongsToMany(Order::class, 'order_products')
+            ->withPivot('quantity', 'delivery_time', 'delivery_status')
+            ->withTimestamps();
     }
 }

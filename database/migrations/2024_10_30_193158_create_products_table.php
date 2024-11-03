@@ -14,12 +14,7 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('delivery_status');
-            $table->dateTime('delivery_time');
-            $table->unsignedBigInteger('order_id');
             $table->timestamps();
-
-            $table->foreign('order_id')->references('id')->on('orders');
         });
     }
 
