@@ -50,8 +50,6 @@ type Mutation {
 type Product @model {
     id: ID!
     name: String!
-    delivery_status: String!
-    delivery_time: DateTime!
     order: Order @belongsTo
 }
 
@@ -59,7 +57,19 @@ type Order @model {
     id: ID!
     order_number: String!
     user: User @belongsTo
-    products: [Product!]! @hasMany
+    products: [ProductPivot!]! @hasMany
+}
+
+type ProductPivot {
+    id: ID!
+    name: String!
+    pivot: OrderProductPivot
+}
+
+type OrderProductPivot {
+    quantity: Int
+    delivery_time: String
+    delivery_status: String
 }
 
 "Account of a person who utilizes this application."

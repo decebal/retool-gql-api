@@ -24,11 +24,55 @@ Use it as a learning resource and modify as needed for your own projects.
 Project Name is a demo integration with retool views.
 This project was created to demonstrate the core concepts of creating a graphql api consumable by retool and serves as a reference or starting point for similar projects.
 
-## Features
+Certainly! Here’s a **README** section on setting up **ngrok** to expose your local API for use with **Retool**.
 
-•	📄 Feature 1: Describe what it does and why it’s valuable.
-•	🔒 Feature 2: Explain another feature.
-•	🚀 Feature 3: Highlight any unique capabilities.
+---
+
+### Using ngrok with Retool
+
+If you're developing locally and want to connect your Retool app to your local API, you can use **ngrok** to expose your API with a secure, public URL. This allows Retool to access your API even though it's running on your local machine.
+
+#### Step 1: Install ngrok
+
+If you haven’t already installed ngrok, you can download it [from the official ngrok website](https://ngrok.com/download) and follow the installation instructions for your operating system.
+
+#### Step 2: Start ngrok
+
+1. In your terminal, run ngrok to expose your local server. Replace `8000` with the port your server is running on:
+
+   ```bash
+   ngrok http 8000
+   ```
+
+2. ngrok will provide you with a public URL, such as:
+
+   ```
+   Forwarding                    https://your-random-subdomain.ngrok.io -> http://localhost:8000
+   ```
+
+3. Copy the HTTPS URL provided by ngrok (e.g., `https://your-random-subdomain.ngrok.io`). This will be the URL you use in Retool to access your local API.
+
+#### Step 3: Configure Retool to Use the ngrok URL
+
+1. Open your **Retool** app.
+2. Go to **Resources** and set up or edit your API resource to point to the ngrok URL:
+    - **Base URL**: Set this to the ngrok HTTPS URL you copied (e.g., `https://your-random-subdomain.ngrok.io`).
+    - **Headers**: If your API requires authentication, add any required headers here, such as a Bearer token or API key.
+3. Save the resource.
+
+#### Step 4: Test the Connection in Retool
+
+- Run a simple query in Retool to ensure the connection to your local API is successful via the ngrok URL.
+- You should be able to interact with your local API as if it were live, allowing you to build and test your Retool app against your local environment.
+
+#### Important Notes
+
+- **ngrok Sessions**: Free ngrok sessions are temporary and will reset after a certain amount of time or if you close the terminal. When this happens, the ngrok URL will change, and you’ll need to update the Base URL in Retool with the new URL.
+- **Static URLs**: If you need a persistent URL, consider upgrading to a paid ngrok plan, which allows you to reserve a custom subdomain.
+
+---
+
+This setup allows you to securely expose your local API to Retool, making it easy to build and test against your development environment.
 
 ### Installation
 
@@ -235,17 +279,3 @@ Contributions are welcome! If you’d like to improve this project:
 This project is licensed under the MIT License. You are free to use, modify, and distribute this code with proper attribution.
 
 This README provides a comprehensive introduction and setup guide for your repository, making it easy for others to understand and contribute. Adjust each section as needed to fit your specific project!
-
-
-# TODO:
-
-6. Retool Configuration
-
-Set up Retool views for Admin and Supplier roles:
-
-	•	Admin View:
-	•	Use GraphQL query for orders and products.
-	•	Provide fields to add new orders (limited to Admin role).
-	•	Supplier View:
-	•	Use GraphQL mutations to update deliveryTime and deliveryStatus for products (limited to Supplier role).
-

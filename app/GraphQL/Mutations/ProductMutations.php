@@ -50,17 +50,59 @@ class ProductMutations
             ]);
         }
 
-        // Define valid delivery statuses
-        $validStatuses = ['pending', 'shipped', 'delivered', 'cancelled'];
-
         // Validate the delivery time and status
         $validator = Validator::make($args, [
-            'deliveryTime' => 'required|date|after:now',
-            'deliveryStatus' => 'required|string|in:' . implode(',', $validStatuses),
+            'deliveryTime' => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    // Define acceptable formats
+                    $formats = ['Y-m-d', 'Y-m-d H:i:s'];
+                    $dateValid = false;
+
+                    foreach ($formats as $format) {
+                        $parsedDate = \DateTime::createFromFormat($format, $value);
+                        if ($parsedDate && $parsedDate->format($format) === $value) {
+                            $dateValid = true;
+                            break;
+                        }
+                    }
+
+                    if (!$dateValid) {
+                        $fail("The $attribute must be a valid date in one of the formats: Y-m-d or Y-m-d H:i:s.");
+                    }
+                }
+            ],
+            'deliveryStatus' => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    // Define valid delivery statuses
+                    $validStatuses = ['pending', 'shipped', 'delivered', 'cancelled'];
+                    if (!in_array(strtolower($value), $validStatuses)) {
+                        $fail("The $attribute must be one of the following: " . implode(', ', $validStatuses) . " (case-insensitive).");
+                    }
+                }
+            ],
         ]);
 
         if ($validator->fails()) {
             throw new ValidationException($validator);
+        }
+
+        $deliveryTime = $args['deliveryTime'];
+        $formats = ['Y-m-d', 'Y-m-d H:i:s']; // Define your allowed formats
+        $parsedDate = null;
+
+        foreach ($formats as $format) {
+            try {
+                $parsedDate = Carbon::createFromFormat($format, $deliveryTime);
+                break; // Exit loop once a valid format is found
+            } catch (\Exception $e) {
+                // Continue to the next format if the current one fails
+            }
+        }
+
+        if (!$parsedDate) {
+            throw new \InvalidArgumentException("The deliveryTime must match one of the following formats: " . implode(', ', $formats));
         }
 
         // Update the order_products table
@@ -68,8 +110,8 @@ class ProductMutations
             ->where('order_id', $args['orderId'])
             ->where('product_id', $args['productId'])
             ->update([
-                'delivery_time' => Carbon::parse($args['deliveryTime']),
-                'delivery_status' => $args['deliveryStatus'],
+                'delivery_time' => $parsedDate,
+                'delivery_status' => strtolower($args['deliveryStatus']),
                 'updated_at' => now(),
             ]);
 

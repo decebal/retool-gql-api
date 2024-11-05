@@ -22,7 +22,7 @@ type Mutation {
 type Order {
     id: ID!
     order_number: String!
-    products: [Product!]!
+    products: [ProductPivot!]!
     user: User
 }
 
@@ -32,6 +32,12 @@ type OrderPaginator {
     data: [Order!]!
     "Pagination information about the list of items."
     paginatorInfo: PaginatorInfo!
+}
+
+type OrderProductPivot {
+    delivery_status: String
+    delivery_time: String
+    quantity: Int
 }
 
 "Information about pagination using a fully featured paginator."
@@ -55,8 +61,6 @@ type PaginatorInfo {
 }
 
 type Product {
-    delivery_status: String!
-    delivery_time: DateTime!
     id: ID!
     name: String!
     order: Order
@@ -68,6 +72,12 @@ type ProductPaginator {
     data: [Product!]!
     "Pagination information about the list of items."
     paginatorInfo: PaginatorInfo!
+}
+
+type ProductPivot {
+    id: ID!
+    name: String!
+    pivot: OrderProductPivot
 }
 
 "Indicates what fields are available at the top level of a query operation."

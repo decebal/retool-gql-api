@@ -41,7 +41,7 @@ class OrderMutations
         }
 
         // Generate the next order number with the format ORD-XXXX
-        $lastOrder = Order::latest('created_at')->first();  // Get the latest order by creation date
+        $lastOrder = Order::latest('id')->first();  // Get the latest order by id
         $nextOrderNumber = 'ORD-1001';  // Default for the first order
 
         if ($lastOrder) {
